@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.time.DateTimeException;
 
 /**
  *
@@ -170,7 +169,7 @@ public class Company {
         //ADDRESS CUSTOMER
         System.out.printf("\tPlease enter your address with no spaces between.\n");
         
-        //Call the contrustor of the Customer class to saved all the date that user gives and don't call set and get so many times
+        //Call the constructor of the Customer class to saved all the date that user gives and don't call set and get so many times
         Customer customer = new Customer(this.userVatNumber,this.userId,this.userEmail,customerInfo.next());
         
         //a while to run this option until user gives valid input
@@ -213,7 +212,7 @@ public class Company {
      * Search if this vat already used
      * and return the customers with this vat
      *
-     * @param int userVat the vat that user gave
+     * @param userVat the vat that user gave
      * @return Customer that find in the Customer list
      */
     public Customer findVat(int userVat) {
@@ -233,7 +232,7 @@ public class Company {
      * Search if this id already used
      * and return the customers with this id
      *
-     * @param String userId the id that user gave
+     * @param userId the id that user gave
      * @return Customer that find in the Customer list
      */
     public Customer findId(String userId) {
@@ -251,7 +250,7 @@ public class Company {
     /**
      * Search if this phone number already used
      * 
-     * @param BigInteger userPhone int userVat the phone and vat that user gave
+     * @param userPhone int userVat the phone and vat that user gave
      * @return true if everything went right and false when user gave a  not valid input
      */
     public boolean checkPhoneNumber(BigInteger userPhone,int userVat){
@@ -273,7 +272,7 @@ public class Company {
     /**
      * Search if user gave a valid vat
      * 
-     * @param int userVat vat that user gave
+     * @param userVat vat that user gave
      * @return true if everything went right and false when user gave a  not valid input
      */
     public boolean checkVat(int userVat) {
@@ -290,7 +289,7 @@ public class Company {
      * Search if user gave a valid email like artemis@gmail.com ,a@ok.in
      * check if gave @ and . in the correct position
      * 
-     * @param String userEmail email that user gave
+     * @param userEmail email that user gave
      * @return true if everything went right and false when user gave a  not valid input
      */
     public boolean checkEmail(String userEmail) {
@@ -342,7 +341,7 @@ public class Company {
                 }
                 run=false;
                 
-                //choose a contact beetwen this two landline or mobile
+                //choose a contact between this two landline or mobile
                 userCust.chooseContract();
                 
             //To check the input of user and dont allow to put an not int type 
@@ -413,7 +412,7 @@ public class Company {
                         
                         //delete the correct contract
                         userCust.getContractList().remove(tmp-1);
-                        System.out.printf("The contract %d removed successfull from the list",tmp);
+                        System.out.printf("The contract %d removed successful from the list",tmp);
                         run=false;
                      
                     //To check the input of user and dont allow to put an not int type 
@@ -438,7 +437,7 @@ public class Company {
     /**
      * Search if user gave a valid id like am123423
      * 
-     * @param String userId id that user gave
+     * @param userId id that user gave
      * @return true if everything went right and false when user gave a  not valid input
      */
     public boolean checkId(String userId){
@@ -474,7 +473,7 @@ public class Company {
      * Check if the date that given by the user is valid 
      * and does not coincide with any other contract
      * 
-     * @param LocalDateTime userDateTime,BigInteger userPhone that user gave and 
+     * @param userDateTime,BigInteger userPhone that user gave and
      * the phone of the contract that the date is deducted
      * @return true if everything went right and false when user gave a  not valid input
      */

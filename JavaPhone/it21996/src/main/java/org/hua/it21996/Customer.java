@@ -8,9 +8,7 @@ package org.hua.it21996;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Scanner;
-import static org.hua.it21996.Contract.STANDING_ORDER_CARD;
 
 
 /**
@@ -194,7 +192,7 @@ public class Customer {
 
                 case "1":
 
-                    //create an oblect of landlineContract class
+                    //create an object of landlineContract class
                     LandlineContract landContr = new LandlineContract();
                     
                     //a while to run this option until user gives valid input
@@ -240,7 +238,7 @@ public class Customer {
                                 run=false;
                                 break;
                             case "NO":
-                                System.out.println("Okey then...");
+                                System.out.println("Okay then...");
                                 run=false;
                                 break;
                             default:
@@ -280,7 +278,7 @@ public class Customer {
                     break;
                 case "2":
 
-                    //create an oblect of MobileContract class
+                    //create an object of MobileContract class
                     MobileContract mobContr = new MobileContract();
 
                     //a while to run this option until user gives valid input
