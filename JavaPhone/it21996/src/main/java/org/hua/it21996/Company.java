@@ -42,7 +42,7 @@ public class Company {
      */
     public void Menu() {
         
-        System.out.printf("\tPlease choose an option from 1 to 6\n");
+        System.out.printf("\tPlease choose an option from 1 to 5\n");
         System.out.printf("\t1.Create A New Customer\n"
                 + "\t2.Create A New Contract\n"
                 + "\t3.Delete Contract\n"
@@ -58,19 +58,19 @@ public class Company {
      */
     public void customersContracts(){
         // two customers in the system
-        Customer defaultCust1=new Customer(987654321,"Themistokleous1","AW12345",CIVILIAN,"rouliscat2000@gmail.com");
-        Customer defaultCust2=new Customer(987654322,"Themistokleous2","AW12346",CIVILIAN,"roulis2000@gmail.com");
+        Customer defaultCust1=new Customer(987654321,"Themou1","AW12345",CIVILIAN,"art2000@gmail.com");
+        Customer defaultCust2=new Customer(987654322,"Themou2","AW12346",CIVILIAN,"art@gmail.com");
         customerList.add(defaultCust1);
         customerList.add(defaultCust2);
         
         //add first (landline) contract in first customer
-        BigInteger number1 = new BigInteger("2106140817");
+        BigInteger number1 = new BigInteger("2101234567");
         LocalDateTime userDate1=LocalDateTime.of(2021, 11, 21,14,21);
         LandlineContract defaultLandline1=new LandlineContract(12,number1,userDate1);
         defaultCust1.getContractList().add(defaultLandline1);
         
         //add a second (mobile) contract in the first customer
-        BigInteger number2 = new BigInteger("6941642009");
+        BigInteger number2 = new BigInteger("6912345678");
         LocalDateTime userDate2=LocalDateTime.of(2021, 12, 21,14,21);
         MobileContract defaultMob1=new MobileContract(12,number2,userDate2);
         defaultCust1.getContractList().add(defaultMob1);
@@ -82,7 +82,7 @@ public class Company {
         defaultCust2.getContractList().add(defaultLandline3);
         
         //add a second (mobile) contract in the first customer
-        BigInteger number4 = new BigInteger("6941642009");
+        BigInteger number4 = new BigInteger("6941642123");
         LocalDateTime userDate4=LocalDateTime.of(2021, 11, 21,14,21);
         MobileContract defaultMob4=new MobileContract(12,number4,userDate4);
         defaultCust2.getContractList().add(defaultMob4);
@@ -344,6 +344,7 @@ public class Company {
                 
                 //choose a contact between this two landline or mobile
                 userCust.chooseContract();
+                System.out.println("\tYour Contract added in the list");
                 
             //To check the input of user and dont allow to put an not int type 
             }catch(InputMismatchException e){
