@@ -58,19 +58,19 @@ public class Company {
      */
     public void customersContracts(){
         // two customers in the system
-        Customer defaultCust1=new Customer(987654321,"Themistokleous1","AW12345",CIVILIAN,"rouliscat2000@gmail.com");
-        Customer defaultCust2=new Customer(987654322,"Themistokleous2","AW12346",CIVILIAN,"roulis2000@gmail.com");
+        Customer defaultCust1=new Customer(987654321,"Themou12","AW12345",CIVILIAN,"art@gmail.com");
+        Customer defaultCust2=new Customer(987654322,"Themou151","AW12346",CIVILIAN,"art2000@gmail.com");
         customerList.add(defaultCust1);
         customerList.add(defaultCust2);
         
         //add first (landline) contract in first customer
-        BigInteger number1 = new BigInteger("2106140817");
+        BigInteger number1 = new BigInteger("2106240818");
         LocalDateTime userDate1=LocalDateTime.of(2021, 11, 21,14,21);
         LandlineContract defaultLandline1=new LandlineContract(12,number1,userDate1);
         defaultCust1.getContractList().add(defaultLandline1);
         
         //add a second (mobile) contract in the first customer
-        BigInteger number2 = new BigInteger("6941642009");
+        BigInteger number2 = new BigInteger("6956642013");
         LocalDateTime userDate2=LocalDateTime.of(2021, 12, 21,14,21);
         MobileContract defaultMob1=new MobileContract(12,number2,userDate2);
         defaultCust1.getContractList().add(defaultMob1);
