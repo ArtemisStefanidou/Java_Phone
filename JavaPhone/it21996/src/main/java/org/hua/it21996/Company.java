@@ -58,22 +58,34 @@ public class Company {
      */
     public void customersContracts(){
         // two customers in the system
-        Customer defaultCust1=new Customer(987654321,"Themistokleous1","AW12345",STUDENT,"rouliscat2000@gmail.com");
-        Customer defaultCust2=new Customer(987654322,"Themistokleous2","AW12346",STUDENT,"roulis2000@gmail.com");
+        Customer defaultCust1=new Customer(987654321,"Themistokleous1","AW12345",CIVILIAN,"rouliscat2000@gmail.com");
+        Customer defaultCust2=new Customer(987654322,"Themistokleous2","AW12346",CIVILIAN,"roulis2000@gmail.com");
         customerList.add(defaultCust1);
         customerList.add(defaultCust2);
         
-        //add first contract in first customer
+        //add first (landline) contract in first customer
         BigInteger number1 = new BigInteger("2106140817");
         LocalDateTime userDate1=LocalDateTime.of(2021, 11, 21,14,21);
         LandlineContract defaultLandline1=new LandlineContract(12,number1,userDate1);
         defaultCust1.getContractList().add(defaultLandline1);
         
-        //add a second contract in the first customer
+        //add a second (mobile) contract in the first customer
         BigInteger number2 = new BigInteger("6941642009");
         LocalDateTime userDate2=LocalDateTime.of(2021, 12, 21,14,21);
         MobileContract defaultMob1=new MobileContract(12,number2,userDate2);
         defaultCust1.getContractList().add(defaultMob1);
+        
+        //add first (landline) contract in second customer
+        BigInteger number3 = new BigInteger("2105210298");
+        LocalDateTime userDate3=LocalDateTime.of(2021, 10, 21,14,21);
+        LandlineContract defaultLandline3=new LandlineContract(12,number3,userDate3);
+        defaultCust2.getContractList().add(defaultLandline3);
+        
+        //add a second (mobile) contract in the first customer
+        BigInteger number4 = new BigInteger("6941642009");
+        LocalDateTime userDate4=LocalDateTime.of(2021, 11, 21,14,21);
+        MobileContract defaultMob4=new MobileContract(12,number4,userDate4);
+        defaultCust2.getContractList().add(defaultMob4);
         
         
     }
@@ -336,6 +348,11 @@ public class Company {
             //To check the input of user and dont allow to put an not int type 
             }catch(InputMismatchException e){
                 System.out.println("Please give a valid Vat");
+                
+                //clear the buffer
+                customerInfo.nextLine();
+                continue;
+                
             }
         }
 
@@ -508,11 +525,8 @@ public class Company {
             for(int j=0;j<customerList.get(i).getContractList().size();j++){
                 
                 //for landLine contract
-                
-                
                 if(customerList.get(i).getContractList().get(j).getPhoneNumber().toString().startsWith("2")){
-                    //number of land line contract
-                    this.numberOfLandContracts++;
+                    
                     //for landline free minutes
                     if(customerList.get(i).getContractList().get(j).getSumFreeCallsLand() < minLand1){
                         minLand1=customerList.get(i).getContractList().get(j).getSumFreeCallsLand();
@@ -532,10 +546,8 @@ public class Company {
                     sumMob1+=customerList.get(i).getContractList().get(j).getSumFreeCallsMob();
                 }
                 //for mobile contract
-                this.numberOfMobContracts++;
                 if(customerList.get(i).getContractList().get(j).getPhoneNumber().toString().startsWith("6")){
-                    //number of mobile contrats
-                    this.numberOfMobContracts++;
+                    
                     //for landline free minutes
                     if(customerList.get(i).getContractList().get(j).getSumFreeCallsLand() < minLand2){
                         minLand2=customerList.get(i).getContractList().get(j).getSumFreeCallsLand();
@@ -559,9 +571,11 @@ public class Company {
             
         }
         System.out.println();
+        
         //for landline contract
-        System.out.println("\tMax Min an Mean from Landline to LandLine or to Mobile");
+        System.out.println("\tMax Min and Mean from Landline to LandLine or to Mobile");
         //for landline numbers
+        
         meanLand1=sumLand1/this.numberOfLandContracts;
         
         System.out.println("Max Calls to LandLine:"+maxLand1);
@@ -575,7 +589,7 @@ public class Company {
         System.out.println("Mean Calls to Mobile:"+meanMob1);
         
         //for mobile contract
-        System.out.println("\tMax Min an Mean from Mobile to LandLine or  to Mobile");
+        System.out.println("\tMax Min and Mean from Mobile to LandLine or  to Mobile");
         //for landline numbers
         meanLand2=sumLand2/this.numberOfMobContracts;
         System.out.println("Max Calls to LandLine:"+maxLand2);
@@ -596,12 +610,17 @@ public class Company {
         int minMB=1000000,minSms=1000000;
         int sumMB=0,sumSms=0;
         int meanMB=0,meanSms=0;
+        int sumMobContr=0;
+        int landcontr=0;
+        int mobcontr=0;
         
         
         for (int i = 0; i < customerList.size(); i++) {
             
             for(int j=0;j<customerList.get(i).getContractList().size();j++){
                 if(customerList.get(i).getContractList().get(j).getPhoneNumber().toString().startsWith("6")){
+                    //number
+                    sumMobContr++;
                     //for MB
                     if(customerList.get(i).getContractList().get(j).getMB()>maxMB){
                         maxMB=customerList.get(i).getContractList().get(j).getMB();
@@ -622,26 +641,28 @@ public class Company {
                 }
             }
            customerList.get(i).MobLandContracts();
-           this.numberOfLandContracts+=customerList.get(i).getNumberOfLand();
-           this.numberOfMobContracts+=customerList.get(i).getNumberOfMob();
+            
+           landcontr+=customerList.get(i).getNumberOfLand();
+           mobcontr+=customerList.get(i).getNumberOfMob();
         }
-        
+        this.numberOfLandContracts=landcontr;
+        this.numberOfMobContracts=mobcontr;
         meanMB=sumMB/this.numberOfMobContracts;
         meanSms=sumSms/this.numberOfMobContracts;
         //For MB
         this.maxMB=maxMB;
         this.minMB=minMB;
         this.meanMB=meanMB;
-        System.out.println("\tFor MB");
-        System.out.println("Max of MB is:"+this.maxMB);
-        System.out.println("Min of MB is:"+this.minMB);
-        System.out.println("Mean of MB is:"+this.meanMB);
+        System.out.println("\tFor Mobile Contract For GB");
+        System.out.println("Max of GB is:"+this.maxMB);
+        System.out.println("Min of GB is:"+this.minMB);
+        System.out.println("Mean of GB is:"+this.meanMB);
         
         //For SMS
         this.maxSms=maxSms;
         this.minSms=minSms;
         this.meanSms=meanSms;
-        System.out.println("\tFor SMS");
+        System.out.println("\tFor Mobile Contract For SMS");
         System.out.println("Max of SMS is:"+this.maxSms);
         System.out.println("Min of SMS is:"+this.minSms);
         System.out.println("Mean of SMS is:"+this.meanSms);
@@ -683,6 +704,7 @@ public class Company {
                     case "1":
 
                         printStatistics();
+                        run=false;
                         break;
                     case "2":
                         try{

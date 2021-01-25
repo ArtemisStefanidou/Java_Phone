@@ -39,6 +39,15 @@ public class MobileContract extends Contract {
         this.setDate(date);
         this.setDurationContract(userDurationContract);
         this.setPhoneNumber(userPhoneNumber);
+        this.sumFreeGB=5;
+        super.setCostPerMonth(8);
+        this.sumFreeSms=100;
+        super.setCostPerMonth(5);
+        super.setSumFreeCallsLand(600);
+        super.setSumFreeCallsMob(350);
+        super.setCostPerMonth(9);
+        super.setTypeAccount(PRINTED_MATTER_ACCOUNT);
+        super.setPaymentWay(CASH);
         
     }
 

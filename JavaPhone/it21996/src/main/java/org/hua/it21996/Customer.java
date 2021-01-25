@@ -155,7 +155,7 @@ public class Customer {
                 System.out.println("Contract Type:Mobile");
             }
             ContractList.get(i).printInfoContract();
-            
+            System.out.println();
             
         }
     }

@@ -41,6 +41,12 @@ public class LandlineContract extends Contract{
         this.setDate(date);
         this.setDurationContract(userDurationContract);
         this.setPhoneNumber(userPhoneNumber);
+        this.speedBooster=ADSL;
+        super.setSumFreeCallsLand(600);
+        super.setSumFreeCallsMob(350);
+        super.setCostPerMonth(9);
+        super.setTypeAccount(PRINTED_MATTER_ACCOUNT);
+        super.setPaymentWay(CASH);
         
     }
     
