@@ -8,7 +8,9 @@ package org.hua.it21996;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
+import static org.hua.it21996.Contract.STANDING_ORDER_CARD;
 
 
 /**
@@ -192,7 +194,7 @@ public class Customer {
 
                 case "1":
 
-                    //create an object of landlineContract class
+                    //create an oblect of landlineContract class
                     LandlineContract landContr = new LandlineContract();
                     
                     //a while to run this option until user gives valid input
@@ -238,7 +240,7 @@ public class Customer {
                                 run=false;
                                 break;
                             case "NO":
-                                System.out.println("Okay then...");
+                                System.out.println("Okey then...");
                                 run=false;
                                 break;
                             default:
@@ -278,7 +280,7 @@ public class Customer {
                     break;
                 case "2":
 
-                    //create an object of MobileContract class
+                    //create an oblect of MobileContract class
                     MobileContract mobContr = new MobileContract();
 
                     //a while to run this option until user gives valid input
@@ -398,5 +400,25 @@ public class Customer {
             }
         this.numberOfLand=counterLand;
         this.numberOfMob=counterMob;
+    }
+    
+    public void printActiveContracts(){
+        
+       
+        LocalDateTime startOfContract,endOfContract;
+        int counter=0;
+        
+        System.out.println("\tThe active contracts are:");
+            for(int j=0;j<ContractList.size();j++){
+                
+                //Check actives contracts for discounts
+                startOfContract=ContractList.get(j).getDate();
+                endOfContract=ContractList.get(j).getDate().plusMonths(ContractList.get(j).getDurationContract());
+                if(LocalDateTime.now().isAfter(startOfContract) || LocalDateTime.now().isBefore(endOfContract)){
+                    
+                        ContractList.get(j).printInfoContract();
+                        
+                }
+            }
     }
 }

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+
 /**
  *
  * @author artemis
@@ -57,19 +58,19 @@ public class Company {
      */
     public void customersContracts(){
         // two customers in the system
-        Customer defaultCust1=new Customer(987654321,"Themou12","AW12345",CIVILIAN,"art@gmail.com");
-        Customer defaultCust2=new Customer(987654322,"Themou151","AW12346",CIVILIAN,"art2000@gmail.com");
+        Customer defaultCust1=new Customer(987654321,"Themistokleous1","AW12345",CIVILIAN,"rouliscat2000@gmail.com");
+        Customer defaultCust2=new Customer(987654322,"Themistokleous2","AW12346",CIVILIAN,"roulis2000@gmail.com");
         customerList.add(defaultCust1);
         customerList.add(defaultCust2);
         
         //add first (landline) contract in first customer
-        BigInteger number1 = new BigInteger("2106240818");
+        BigInteger number1 = new BigInteger("2106140817");
         LocalDateTime userDate1=LocalDateTime.of(2021, 11, 21,14,21);
         LandlineContract defaultLandline1=new LandlineContract(12,number1,userDate1);
         defaultCust1.getContractList().add(defaultLandline1);
         
         //add a second (mobile) contract in the first customer
-        BigInteger number2 = new BigInteger("6956642013");
+        BigInteger number2 = new BigInteger("6941642009");
         LocalDateTime userDate2=LocalDateTime.of(2021, 12, 21,14,21);
         MobileContract defaultMob1=new MobileContract(12,number2,userDate2);
         defaultCust1.getContractList().add(defaultMob1);
@@ -169,7 +170,7 @@ public class Company {
         //ADDRESS CUSTOMER
         System.out.printf("\tPlease enter your address with no spaces between.\n");
         
-        //Call the constructor of the Customer class to saved all the date that user gives and don't call set and get so many times
+        //Call the contrustor of the Customer class to saved all the date that user gives and don't call set and get so many times
         Customer customer = new Customer(this.userVatNumber,this.userId,this.userEmail,customerInfo.next());
         
         //a while to run this option until user gives valid input
@@ -212,7 +213,7 @@ public class Company {
      * Search if this vat already used
      * and return the customers with this vat
      *
-     * @param userVat the vat that user gave
+     * @param  userVat the vat that user gave
      * @return Customer that find in the Customer list
      */
     public Customer findVat(int userVat) {
@@ -232,7 +233,7 @@ public class Company {
      * Search if this id already used
      * and return the customers with this id
      *
-     * @param userId the id that user gave
+     * @param  userId the id that user gave
      * @return Customer that find in the Customer list
      */
     public Customer findId(String userId) {
@@ -250,7 +251,7 @@ public class Company {
     /**
      * Search if this phone number already used
      * 
-     * @param userPhone int userVat the phone and vat that user gave
+     * @param  userPhone int userVat the phone and vat that user gave
      * @return true if everything went right and false when user gave a  not valid input
      */
     public boolean checkPhoneNumber(BigInteger userPhone,int userVat){
@@ -272,7 +273,7 @@ public class Company {
     /**
      * Search if user gave a valid vat
      * 
-     * @param userVat vat that user gave
+     * @param  userVat vat that user gave
      * @return true if everything went right and false when user gave a  not valid input
      */
     public boolean checkVat(int userVat) {
@@ -289,7 +290,7 @@ public class Company {
      * Search if user gave a valid email like artemis@gmail.com ,a@ok.in
      * check if gave @ and . in the correct position
      * 
-     * @param userEmail email that user gave
+     * @param  userEmail email that user gave
      * @return true if everything went right and false when user gave a  not valid input
      */
     public boolean checkEmail(String userEmail) {
@@ -412,7 +413,7 @@ public class Company {
                         
                         //delete the correct contract
                         userCust.getContractList().remove(tmp-1);
-                        System.out.printf("The contract %d removed successful from the list",tmp);
+                        System.out.printf("The contract %d removed successfull from the list",tmp);
                         run=false;
                      
                     //To check the input of user and dont allow to put an not int type 
@@ -437,7 +438,7 @@ public class Company {
     /**
      * Search if user gave a valid id like am123423
      * 
-     * @param userId id that user gave
+     * @param  userId id that user gave
      * @return true if everything went right and false when user gave a  not valid input
      */
     public boolean checkId(String userId){
@@ -473,7 +474,7 @@ public class Company {
      * Check if the date that given by the user is valid 
      * and does not coincide with any other contract
      * 
-     * @param userDateTime,BigInteger userPhone that user gave and
+     * @param  userDateTime,BigInteger userPhone that user gave and 
      * the phone of the contract that the date is deducted
      * @return true if everything went right and false when user gave a  not valid input
      */
@@ -512,12 +513,12 @@ public class Company {
         int maxLand1=0,maxMob1=0;
         int minLand1=1000000,minMob1=1000000;
         int sumLand1=0,sumMob1=0;
-        int meanLand1=0,meanMob1=0;
+        int meanLand1,meanMob1;
         
         int maxLand2=0,maxMob2=0;
         int minLand2=1000000,minMob2=1000000;
         int sumLand2=0,sumMob2=0;
-        int meanLand2=0,meanMob2=0;
+        int meanLand2,meanMob2;
         
         for (int i = 0; i < customerList.size(); i++) {
             
@@ -571,6 +572,12 @@ public class Company {
         }
         System.out.println();
         
+        if(this.numberOfLandContracts==0)
+        {
+            System.out.println("\tYou have not landline contracts");
+            return;
+        }
+        
         //for landline contract
         System.out.println("\tMax Min and Mean from Landline to LandLine or to Mobile");
         //for landline numbers
@@ -618,8 +625,7 @@ public class Company {
             
             for(int j=0;j<customerList.get(i).getContractList().size();j++){
                 if(customerList.get(i).getContractList().get(j).getPhoneNumber().toString().startsWith("6")){
-                    //number
-                    sumMobContr++;
+                   
                     //for MB
                     if(customerList.get(i).getContractList().get(j).getMB()>maxMB){
                         maxMB=customerList.get(i).getContractList().get(j).getMB();
@@ -644,27 +650,35 @@ public class Company {
            landcontr+=customerList.get(i).getNumberOfLand();
            mobcontr+=customerList.get(i).getNumberOfMob();
         }
-        this.numberOfLandContracts=landcontr;
-        this.numberOfMobContracts=mobcontr;
-        meanMB=sumMB/this.numberOfMobContracts;
-        meanSms=sumSms/this.numberOfMobContracts;
-        //For MB
-        this.maxMB=maxMB;
-        this.minMB=minMB;
-        this.meanMB=meanMB;
-        System.out.println("\tFor Mobile Contract For GB");
-        System.out.println("Max of GB is:"+this.maxMB);
-        System.out.println("Min of GB is:"+this.minMB);
-        System.out.println("Mean of GB is:"+this.meanMB);
         
-        //For SMS
-        this.maxSms=maxSms;
-        this.minSms=minSms;
-        this.meanSms=meanSms;
-        System.out.println("\tFor Mobile Contract For SMS");
-        System.out.println("Max of SMS is:"+this.maxSms);
-        System.out.println("Min of SMS is:"+this.minSms);
-        System.out.println("Mean of SMS is:"+this.meanSms);
+        this.numberOfLandContracts=landcontr;
+        if(mobcontr==0)
+        {
+            System.out.println("\tYou have not mobile contracts");
+            return;
+        }
+            
+            this.numberOfMobContracts=mobcontr;
+            meanMB=sumMB/this.numberOfMobContracts;
+            meanSms=sumSms/this.numberOfMobContracts;
+            //For MB
+            this.maxMB=maxMB;
+            this.minMB=minMB;
+            this.meanMB=meanMB;
+            System.out.println("\tFor Mobile Contract For GB");
+            System.out.println("Max of GB is:"+this.maxMB);
+            System.out.println("Min of GB is:"+this.minMB);
+            System.out.println("Mean of GB is:"+this.meanMB);
+
+            //For SMS
+            this.maxSms=maxSms;
+            this.minSms=minSms;
+            this.meanSms=meanSms;
+            System.out.println("\tFor Mobile Contract For SMS");
+            System.out.println("Max of SMS is:"+this.maxSms);
+            System.out.println("Min of SMS is:"+this.minSms);
+            System.out.println("Mean of SMS is:"+this.meanSms);
+        
     }
     
     
@@ -721,6 +735,7 @@ public class Company {
                                }
 
                             userCust.printAllContracts();
+                            userCust.printActiveContracts();
                             run=false;
                             break;
                             //To check the input of user and dont allow to put an not int type 
