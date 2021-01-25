@@ -20,8 +20,13 @@ public class it21996 {
 
         boolean main;
         Company userComp= new Company();
+        
+        //load the customers and the contracts so user can start the program from any option from menu
         userComp.customersContracts();
+        
+        
         main=true;
+        //a while to run this option until user gives valid input
         while(main){
         userComp.Menu();
        

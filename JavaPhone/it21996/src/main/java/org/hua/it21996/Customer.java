@@ -19,6 +19,7 @@ import static org.hua.it21996.Contract.STANDING_ORDER_CARD;
  */
 public class Customer {
 
+    //Variables that used in this class 
     public static int counterCodeCustomer = 0;
     
     
@@ -33,11 +34,10 @@ public class Customer {
     private int numberOfLand;
     private int numberOfMob;
     
+    //the contract list that every customer must have
     private ArrayList<Contract> ContractList;
     
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_CYAN = "\u001B[36m";
-    
+    //constructors
     public Customer(int vatNumber, String address, String id,int property, String email) {
         counterCodeCustomer++;
         this.vatNumber = vatNumber;
@@ -66,8 +66,8 @@ public class Customer {
     public Customer() {
         ContractList = new ArrayList<>();
     }
+    
     //setters
-  
     public void setCustomerNumber(int customerNumber) {
         this.customerNumber = customerNumber;
     }
@@ -98,7 +98,6 @@ public class Customer {
     }
 
     //geters
-   
     public ArrayList<Contract> getContractList() {
         return ContractList;
     }
@@ -149,7 +148,7 @@ public class Customer {
         System.out.println("\t\t\t\tContracts Info\t\t\t\t\n");
         for (int i = 0; i < ContractList.size(); i++) {
             
-            System.out.println(ANSI_CYAN+"NUMBER:"+(i+1)+ANSI_RESET);
+            System.out.println("NUMBER:"+(i+1));
             if(ContractList.get(i) instanceof LandlineContract){
                 System.out.println("Contract Type:LandLine");
             }else{
@@ -173,13 +172,18 @@ public class Customer {
         }
     }
     
-        
+    /**
+    * Choose a contract landline or mobile
+    */
     public void chooseContract(){
-         boolean run;
+        
+        //a while to run this option until user gives valid input
+        boolean run;
         run=true;
         while(run){
+            
             //Επιλογή Συμβολαίο (για κινητά ή σταθερά?)
-            Company Comp= new Company();
+            Company comp= new Company();
 
             System.out.printf("For landline contract press 1\nFor mobile contract press 2\n");
             Scanner choice = new Scanner(System.in);
@@ -190,11 +194,10 @@ public class Customer {
 
                 case "1":
 
+                    //create an oblect of landlineContract class
                     LandlineContract landContr = new LandlineContract();
-
-
-                   
-
+                    
+                    //a while to run this option until user gives valid input
                     run=true;
                     while(run){
 
@@ -203,12 +206,14 @@ public class Customer {
                             System.out.printf("\tPlease enter your landline number.\n");
                             BigInteger tmp = new BigInteger(choice.next());
 
+                            //check if first number is 2 to understand if user gave me a correct phone number
                             if (!tmp.toString().startsWith("2")) {
                                 System.out.println("Please give a phone like 2103451209 starts with 2");
                                 continue;
                             }
 
-                            if(!Comp.checkPhoneNumber(tmp,this.vatNumber)){
+                            //Check if this phone number already used
+                            if(!comp.checkPhoneNumber(tmp,this.vatNumber)){
                                 continue;
                             }
 
@@ -244,23 +249,41 @@ public class Customer {
                         }
                     }
 
+                    //check the free calls to landline and mobile to add a discount
                     if(landContr.getSumFreeCalls()>1000){
                         
                         this.setDiscountAmount(8);
 
                     }
+                    //User set the common info of two (Mobile,Landline)contracts
+                   
+                    if(landContr.getTypeAccount()==Contract.ELECTRONIC_ACCOUNT)
+                    {
+                        this.setDiscountAmount(2);
+                    }
+                    if(landContr.getTypeAccount()==Contract.CREDIT_CARD)
+                    {
+                        this.setDiscountAmount(5);
+                    }
+                    if(landContr.getTypeAccount()==Contract.STANDING_ORDER_CARD)
+                    {
+                        this.setDiscountAmount(5);
+                    }
 
                     //Add the landline Contract in list with all contracts of the customer
                     this.getContractList().add(landContr);
 
+                    //print the contracts info
                     System.out.println("\t\t\t\tContract Info\t\t\t\t\n");
                     landContr.printInfoContract();
-                    System.out.println("Total Discount is:"+this.discountAmount);
+                    
                     break;
                 case "2":
 
+                    //create an oblect of MobileContract class
                     MobileContract mobContr = new MobileContract();
 
+                    //a while to run this option until user gives valid input
                     run=true;
                     while(run){
 
@@ -269,12 +292,15 @@ public class Customer {
                             System.out.printf("\tPlease enter your mobile number.\n");
                             BigInteger tmp1 = new BigInteger(choice.next());
 
+                            //check if first number is 6 to understand if user gave me a correct phone number
                             if (!tmp1.toString().startsWith("6")) {
                                 System.out.println("Please give a phone like 6912830943 starts with 6");
                                 continue;
                             }
 
-                            if(!Comp.checkPhoneNumber(tmp1,this.vatNumber)){
+                            
+                            //Check if this phone number already used
+                            if(!comp.checkPhoneNumber(tmp1,this.vatNumber)){
                                 continue;
                             }
 
@@ -310,7 +336,7 @@ public class Customer {
                     this.ContractList.add(mobContr);
                     System.out.println("\t\t\t\tContract Info\t\t\t\t\n");
                     mobContr.printInfoContract();
-                    System.out.println("Total Discount is"+this.discountAmount);
+                    
 
                     break;
                 default:
@@ -356,6 +382,9 @@ public class Customer {
             
     }
     
+    /**
+     * Count the number of landline and mobile contracts
+     */
     public void MobLandContracts()
     {
         int counterMob=0;

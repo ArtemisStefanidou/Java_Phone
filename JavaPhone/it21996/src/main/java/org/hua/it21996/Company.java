@@ -17,37 +17,45 @@ import java.time.DateTimeException;
  * @author artemis
  */
 public class Company {
-
+    
+    //Constant Field Values for better understanding when someone read my code
     public static final int CIVILIAN = 0;
     public static final int STUDENT = 1;
     public static final int PROFESSIONAL = 2;
 
+    //Variables that used in this class 
     private int userVatNumber;
     private String userId;
     private int tmp;
     private String userEmail;
-    private int maxCallsLand1,minCallsLand1,meanCallsLand1;
-    private int maxCallsMob1,minCallsMob1,meanCallsMob1;
-    private int maxCallsLand2,minCallsLand2,meanCallsLand2;
-    private int maxCallsMob2,minCallsMob2,meanCallsMob2;
     private int numberOfLandContracts,numberOfMobContracts;
     private int maxMB ,minMB,meanMB,maxSms ,minSms ,meanSms ;
     private static Customer userCust=new Customer();
 
     Scanner customerInfo = new Scanner(System.in);
    
-
+    //list which contains all of the Costumers 
     public static ArrayList<Customer> customerList = new ArrayList<Customer>();
     
+    /**
+     * Print the menu for this program
+     */
     public void Menu() {
         
         System.out.printf("\tPlease choose an option from 1 to 6\n");
         System.out.printf("\t1.Create A New Customer\n"
                 + "\t2.Create A New Contract\n"
                 + "\t3.Delete Contract\n"
-                + "\t4.Exit\n");
+                + "\t4.See active contracts and statistics\n"
+                + "\t5.Exit\n");
     }
     
+    /**
+     * 
+     * Create some customers and contracts to have at the start of the program 
+     * so user can start the program from any option from menu
+     *
+     */
     public void customersContracts(){
         // two customers in the system
         Customer defaultCust1=new Customer(987654321,"Themistokleous1","AW12345",STUDENT,"rouliscat2000@gmail.com");
@@ -70,10 +78,17 @@ public class Company {
         
     }
 
+    /**
+     * 
+     * set the variables of a costumer object and added in the list of 
+     * the customers
+     *
+     */
     public void addCustomer() {
 
         boolean run;
         
+        //a while to run this option until user gives valid input
         run=true;
         while(run){
             
@@ -83,7 +98,8 @@ public class Company {
 
             try{
                 this.userVatNumber = customerInfo.nextInt();
-               
+            
+            //To check the input of user and dont allow to put an not int type 
             }catch(InputMismatchException e){
                 
                 customerInfo.nextLine();
@@ -92,10 +108,12 @@ public class Company {
                 continue;
             }
             
+            //check if user gives a valid Vat
             if (!checkVat(this.userVatNumber)) {
                continue;
             }
            
+            //check if already exist another customer with this vat
             if (this.findVat(this.userVatNumber) != null){
                 System.out.printf("\tThis customer already exist.Please try something else\n");
                 continue;
@@ -103,6 +121,7 @@ public class Company {
             
             run=false;
         }
+        //a while to run this option until user gives valid input
         run=true;
         while(run){
             
@@ -110,48 +129,60 @@ public class Company {
             System.out.printf("\tPlease enter your identity number.Like am1234...\n");
             this.userId = customerInfo.next();
             
+            //check if user gives a valid id
             if(!checkId(userId)){
                 continue;
             }
+            //check if already exist another customer with this id
             if (this.findId(this.userId) != null) {
                 System.out.printf("\tThis customer already exist.Please try something else\n");
                 continue;
             }
             run=false;
         }
+        //a while to run this option until user gives valid input
         run=true;
         while(run){
+            
             //EMAIL CUSTOMER
             System.out.printf("\tPlease enter your email.\n");
             this.userEmail = customerInfo.next();
+            
+            //check if user gives a valid email
             if (!checkEmail(this.userEmail)) {
                 continue;
             }
             run=false;
         }
+        
         //ADDRESS CUSTOMER
         System.out.printf("\tPlease enter your address with no spaces between.\n");
         
-        
+        //Call the contrustor of the Customer class to saved all the date that user gives and don't call set and get so many times
         Customer customer = new Customer(this.userVatNumber,this.userId,this.userEmail,customerInfo.next());
         
+        //a while to run this option until user gives valid input
         run=true;
         while(run){
+            
             //PROPERTY CUSTOMER
             System.out.printf("\tPlease enter your property.\n"
                     + "for civilian press 0 \n for student press 1\n "
                     + "for professional press 2\n");
-
+            
+            //choose property
             switch (customerInfo.next()) {
                 case "0":
                     customer.setProperty(CIVILIAN);
                     break;
                 case "1":
                     customer.setProperty(STUDENT);
+                    //add this discount amount to already discount of this user
                     customer.setDiscountAmount(15);
                     break;
                 case "2":
                     customer.setProperty(PROFESSIONAL);
+                    //add this discount amount to already discount of this user
                     customer.setDiscountAmount(10);
                     break;
                 default:
@@ -161,11 +192,18 @@ public class Company {
             run=false;
         }
 
-        
+        //add this customer that created in the list of existing customers
         customerList.add(customer);
 
     }
 
+    /**
+     * Search if this vat already used
+     * and return the customers with this vat
+     *
+     * @param int userVat the vat that user gave
+     * @return Customer that find in the Customer list
+     */
     public Customer findVat(int userVat) {
 
         for (int i = 0; i < customerList.size(); i++) {
@@ -175,9 +213,17 @@ public class Company {
             }
 
         }
+        //if user with this vat does not exist
         return null;
     }
 
+    /**
+     * Search if this id already used
+     * and return the customers with this id
+     *
+     * @param String userId the id that user gave
+     * @return Customer that find in the Customer list
+     */
     public Customer findId(String userId) {
 
         for (int i = 0; i < customerList.size(); i++) {
@@ -186,25 +232,38 @@ public class Company {
                 return customerList.get(i);
             }
         }
+        //if user with this vat does not exist
         return null;
     }
     
+    /**
+     * Search if this phone number already used
+     * 
+     * @param BigInteger userPhone int userVat the phone and vat that user gave
+     * @return true if everything went right and false when user gave a  not valid input
+     */
     public boolean checkPhoneNumber(BigInteger userPhone,int userVat){
         for (int i = 0; i < customerList.size(); i++) {
             for(int j=0;j<customerList.get(i).getContractList().size();j++){
-                
-                
-                    
+                    if(userPhone.toString().length()!=10){
+                        System.out.println("Please give a valid number of 10-digit");
+                        return false;
+                    }
                     if(customerList.get(i).getContractList().get(j).getPhoneNumber().equals(userPhone) && userVat!=customerList.get(i).getVatNumber()){
                         System.out.println("This phone is already used from other customer.");
                         return false;
                     }
-              
             }
         }
         return true;
     }
 
+    /**
+     * Search if user gave a valid vat
+     * 
+     * @param int userVat vat that user gave
+     * @return true if everything went right and false when user gave a  not valid input
+     */
     public boolean checkVat(int userVat) {
 
         if (100000000 > userVat || 999999999 < userVat) {
@@ -215,6 +274,13 @@ public class Company {
         return true;
     }
 
+     /**
+     * Search if user gave a valid email like artemis@gmail.com ,a@ok.in
+     * check if gave @ and . in the correct position
+     * 
+     * @param String userEmail email that user gave
+     * @return true if everything went right and false when user gave a  not valid input
+     */
     public boolean checkEmail(String userEmail) {
 
         String[] tmpEmail1 = userEmail.split("@");
@@ -236,6 +302,12 @@ public class Company {
 
     }
 
+    /**
+     * 
+     * setting the variables of a contract object and add in the list 
+     * contracts of a user
+     *
+     */
     public void addContract() {
         
         boolean run;
@@ -247,13 +319,21 @@ public class Company {
                 //VAT CUSTOMER
                 System.out.println("\tPlease enter your Vat.");
                 tmp = customerInfo.nextInt();
+                
+                //find the customer with the vat that user gave
                 userCust = findVat(tmp);
+                
+                //search if exist this customer with the vat that user gave
                 if (userCust == null) {
                     System.out.println("There is not a Customer with this Vat\nPlease try again");
                     continue;
                 }
                 run=false;
+                
+                //choose a contact beetwen this two landline or mobile
                 userCust.chooseContract();
+                
+            //To check the input of user and dont allow to put an not int type 
             }catch(InputMismatchException e){
                 System.out.println("Please give a valid Vat");
             }
@@ -261,11 +341,16 @@ public class Company {
 
     }
 
-
+    /**
+     * 
+     *Delete a contract from customer's contract list
+     *
+     */
     public void deleteContract() {
 
         boolean run;
         
+        //a while to run this option until user gives valid input
         run=true;
         while(run){
             
@@ -274,57 +359,77 @@ public class Company {
                 //VAT CUSTOMER
                 System.out.println("\tPlease enter your Vat.");
                 tmp = customerInfo.nextInt();
+                
+                //find the customer with the vat that user gave
                 userCust = findVat(tmp);
+                
+                //search if exist this customer with the vat that user gave
                 if (userCust == null) {
                     System.out.println("There is not a Customer with this Vat\nPlease"
                             + "try again");
                     continue;
                 }
+                
+                //check if customers has contract to delete
                 if(userCust.getContractList().size()==0){
                     System.out.println("This customer has not contracts.");
                     return;
                 }
+                
+                //print the contracts to decide what contract number want to delete
                 userCust.printAllContracts();
                 
+                //a while to run this option until user gives valid input
                 run=true;
                 while(run){
+                    
                     try{
                         //get the number of contract that user wants to delete
                         System.out.println("Give me the Contract NUMBER that you want to delete");
                         tmp = customerInfo.nextInt();
 
+                        //check that user gave correct input
                         if (tmp > userCust.getContractList().size() || tmp<1) {
                             System.out.println("There is not this Contract Number.Please try something else");
                             continue;
                         }
+                        
+                        //delete the correct contract
                         userCust.getContractList().remove(tmp-1);
                         System.out.printf("The contract %d removed successfull from the list",tmp);
                         run=false;
+                     
+                    //To check the input of user and dont allow to put an not int type 
                     }catch(InputMismatchException e){
                         System.out.println("Please give a valid NUMBER");
+                        
+                        //clear the buffer
                         customerInfo.nextLine();
                         continue;
                     }
                 }
+            //To check the input of user and dont allow to put an not int type 
             }catch(InputMismatchException e){
                 System.out.println("Please give a valid Vat");
+                
+                //clear the buffer
                 customerInfo.nextLine();
             }
         }
     }
 
-    public Contract findContractCode(int userCode) {
-        for (int i = 0; i < userCust.getContractList().size(); i++) {
-            if (userCust.getContractList().get(i).getContractCode() == userCode) {
-                return userCust.getContractList().get(i);
-            }
-
-        }
-        return null;
-    }
-    
+    /**
+     * Search if user gave a valid id like am123423
+     * 
+     * @param String userId id that user gave
+     * @return true if everything went right and false when user gave a  not valid input
+     */
     public boolean checkId(String userId){
         
+        if(userId.length()!=8){
+            System.out.println("You must give a valid Id of 8 characters");
+            return false;
+        }
         char character1 = userId.charAt(0);
         char character2 = userId.charAt(1);
         if(!(Character.isLetter(character1) && Character.isLetter(character1))) {
@@ -348,14 +453,20 @@ public class Company {
         return true;
     }
     
+     /**
+     * Check if the date that given by the user is valid 
+     * and does not coincide with any other contract
+     * 
+     * @param LocalDateTime userDateTime,BigInteger userPhone that user gave and 
+     * the phone of the contract that the date is deducted
+     * @return true if everything went right and false when user gave a  not valid input
+     */
     public boolean checkContractTime(LocalDateTime userDateTime,BigInteger userPhone){
         
         LocalDateTime vampireAge=LocalDateTime.now().plusYears(100);
-        System.out.println(vampireAge);
-        System.out.println((int)userDateTime.getYear());
-        System.out.println((int)vampireAge.getYear());
+        
         if((int)userDateTime.getYear() > (int)vampireAge.getYear()){
-            System.out.println("Please give a valid year.In 100 years from now we will not know if the company exists ");
+            System.out.println("Please give a valid year.In 100 years from now we will not know if the company exists.Νor if we exist ourselves");
             return false;
         }
         LocalDateTime  startOfContract,endOfContract;
@@ -449,9 +560,10 @@ public class Company {
         }
         System.out.println();
         //for landline contract
-        System.out.println("Max Min an Mean from Landline to LandLine or Mobile");
+        System.out.println("\tMax Min an Mean from Landline to LandLine or to Mobile");
         //for landline numbers
         meanLand1=sumLand1/this.numberOfLandContracts;
+        
         System.out.println("Max Calls to LandLine:"+maxLand1);
         System.out.println("Min Calls to LandLine:"+minLand1);
         System.out.println("Mean Calls to LandLine:"+meanLand1);
@@ -463,7 +575,7 @@ public class Company {
         System.out.println("Mean Calls to Mobile:"+meanMob1);
         
         //for mobile contract
-        System.out.println("Max Min an Mean from Mobile to LandLine or Mobile");
+        System.out.println("\tMax Min an Mean from Mobile to LandLine or  to Mobile");
         //for landline numbers
         meanLand2=sumLand2/this.numberOfMobContracts;
         System.out.println("Max Calls to LandLine:"+maxLand2);
@@ -520,6 +632,7 @@ public class Company {
         this.maxMB=maxMB;
         this.minMB=minMB;
         this.meanMB=meanMB;
+        System.out.println("\tFor MB");
         System.out.println("Max of MB is:"+this.maxMB);
         System.out.println("Min of MB is:"+this.minMB);
         System.out.println("Mean of MB is:"+this.meanMB);
@@ -528,23 +641,33 @@ public class Company {
         this.maxSms=maxSms;
         this.minSms=minSms;
         this.meanSms=meanSms;
+        System.out.println("\tFor SMS");
         System.out.println("Max of SMS is:"+this.maxSms);
         System.out.println("Min of SMS is:"+this.minSms);
         System.out.println("Mean of SMS is:"+this.meanSms);
     }
     
+    
+    /**
+     * 
+     * Print the statistics for sms mb and calls for the 4 choice of the menu
+     * 
+    */
     public void printStatistics(){
         searchMinMaxMeanMBSms();
         searchMinMaxMeanCalls();
     }
     
-    
-    
-    
-    
+    /**
+     * 
+     * Print the statistics or the discount for the user or all user's contract
+     * 
+    */
     public void contractsStatistics(){
-           boolean run;
         
+        boolean run;
+        
+        //a while to run this option until user gives valid input
         run=true;
         while(run){
             
@@ -566,7 +689,11 @@ public class Company {
                             //VAT CUSTOMER
                             System.out.println("\tPlease enter your Vat.");
                             tmp = customerInfo.nextInt();
+                            
+                            //find the customer with the vat that user gave
                             userCust = findVat(tmp);
+                            
+                            //search if exist this customer with the vat that user gave
                             if (userCust == null) {
                                 System.out.println("There is not a Customer with this Vat\nPlease try again");
                                    continue;
@@ -575,17 +702,25 @@ public class Company {
                             userCust.printAllContracts();
                             run=false;
                             break;
-                        }catch(InputMismatchException e){
-                            System.out.println("Please give a valid Vat");
-                            continue;
-                        }
+                            //To check the input of user and dont allow to put an not int type 
+                           }catch(InputMismatchException e){
+                               System.out.println("Please give a valid Vat");
+
+                               //clear the buffer
+                               customerInfo.nextLine();
+                               continue;
+                           }
                         
                     case "3":
                         try{
                             //VAT CUSTOMER
                             System.out.println("\tPlease enter your Vat.");
                             tmp = customerInfo.nextInt();
+                            
+                            //find the customer with the vat that user gave
                             userCust = findVat(tmp);
+                            
+                            //search if exist this customer with the vat that user gave
                             if (userCust == null) {
                                 System.out.println("There is not a Customer with this Vat\nPlease try again");
                                    continue;
@@ -593,13 +728,17 @@ public class Company {
                             userCust.checkNumberOfContracts();
                             userCust.calcDiscount();
 
-                            System.out.println("Your Discounnt for all your Contracts is: -"+userCust.getDiscountAmount()+"%");
+                            System.out.println("Your Discount for all your Contracts is:"+userCust.getDiscountAmount()+"%");
                             run=false;
                           break; 
-                         }catch(InputMismatchException e){
-                            System.out.println("Please give a valid Vat");
-                            continue;
-                        }
+                          //To check the input of user and dont allow to put an not int type 
+                           }catch(InputMismatchException e){
+                               System.out.println("Please give a valid Vat");
+
+                               //clear the buffer
+                               customerInfo.nextLine();
+                               continue;
+                           }
                     default:
                       System.out.printf("\n\tChoice is not correct.Please try something different\n\n");
                       continue;

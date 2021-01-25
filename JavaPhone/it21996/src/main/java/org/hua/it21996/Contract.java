@@ -18,6 +18,7 @@ import java.util.Scanner;
  */
 public abstract class Contract {
 
+    //Constant Field Values for better understanding when someone read my code
     public static final int ELECTRONIC_ACCOUNT = 0;
     public static final int PRINTED_MATTER_ACCOUNT = 1;
 
@@ -25,6 +26,7 @@ public abstract class Contract {
     public static final int CASH = 1;
     public static final int STANDING_ORDER_CARD = 2;
 
+    //Variables that used in this class and which is common to landline and mobile contract
     public static int counterCode=0;
     
     private int contractCode;
@@ -121,7 +123,6 @@ public abstract class Contract {
     }
 
     
-
     public String printTypeAccount() {
         if(this.typeAccount==0) return "Electronic Account";
         if(this.typeAccount==1) return "Printed Matter Account";
@@ -139,17 +140,17 @@ public abstract class Contract {
         return this.phoneNumber;
     }
 
-    
-
-    //Μια μέθοδος που πρέπει να υπάρχει και στα δύο contract(landline,mobile)
-    //και θετει όλες τις πληροφοριες του γενικου contract παίρνοντας input απο το χρηστη
+    /**
+     * A method that must be present in both contracts (landline, mobile)
+     * and sets all the information of the general contract taking input from the user
+     */
     public void setContractInfo() {
         Scanner choice = new Scanner(System.in);
         Company userComp=new Company();
 
         int userYear, userMonth, userDays,userMinutes,userHours;
         
-        
+        //a while to run this option until user gives valid input
         boolean run;
         run=true;
         while(run){
@@ -177,7 +178,7 @@ public abstract class Contract {
             }
         }
         
-       
+        //a while to run this option until user gives valid input
         run=true;
         while(run){
             //Duration Contract
@@ -201,7 +202,8 @@ public abstract class Contract {
                    continue;
             }
         }
-
+        
+        //a while to run this option until user gives valid input
         run=true;
         while(run){
             //Payment Way
@@ -234,6 +236,8 @@ public abstract class Contract {
                     continue;
             }
         }
+        
+        //a while to run this option until user gives valid input
         run=true;
         while(run){
             
@@ -258,21 +262,21 @@ public abstract class Contract {
                         }
                 run=false;
                 setDate(userDate);
+                
+                //to chec if user gave valid date
             }catch(DateTimeException e){
                 System.out.println("Give a valid Date.");
             }
             
         }
             
-        
-        
-        
+        //free calls
         System.out.println("How much min for landline phones and mobiles you want?");
         System.out.println("Press 1 for 500min for landline phones and 550min for mobiles with 12euros per month");
         System.out.println("Press 2 for 600min for landline phones and 350min for mobiles with 9euros per month");
         System.out.println("Press 3 for 400min for landline phones and 700min for mobiles with 20euros per month");
         
-        
+        //a while to run this option until user gives valid input
         run=true;
         while(run){
             switch (choice.next()) {
@@ -308,7 +312,7 @@ public abstract class Contract {
         
     }
 
-    
+   //abstract methods because they had different implement in mobile and landline contracts
    public abstract void printInfoContract();
     
    public abstract int getMB();

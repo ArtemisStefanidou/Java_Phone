@@ -16,12 +16,14 @@ import static org.hua.it21996.Contract.counterCode;
  */
 public class MobileContract extends Contract {
 
+    //Variables that used in this class 
     private int sumFreeGB;
     private int sumFreeSms;
 
    
     Scanner choice = new Scanner(System.in);
     
+    //Constructors
     public MobileContract() {
         
         Contract.counterCode++;
@@ -40,6 +42,7 @@ public class MobileContract extends Contract {
         
     }
 
+    //getters
     public int getSumFreeGB() {
         return sumFreeGB;
     }
@@ -48,10 +51,12 @@ public class MobileContract extends Contract {
         return sumFreeSms;
     }
 
+    
     public void freeGifts(){
         
         boolean run;
         
+        //a while to run this option until user gives valid input
         run=true;
         while(run){
             System.out.println("Do you want internet access?");
@@ -73,6 +78,8 @@ public class MobileContract extends Contract {
 
             }
         }
+        
+        //a while to run this option until user gives valid input
         run=true;
         while(run){
             System.out.println("Do you want sms?");
@@ -104,6 +111,8 @@ public class MobileContract extends Contract {
         System.out.println("For 10GB the cost is 15€");
         System.out.println("For 15GB the cost is 20€");
         
+        
+        //a while to run this option until user gives valid input
         boolean run;
         
         run=true;
@@ -141,6 +150,8 @@ public class MobileContract extends Contract {
         System.out.println("For 60sms the cost is 3€");
         System.out.println("For 30sms the cost is 1€");
         
+        
+        //a while to run this option until user gives valid input
         boolean run;
         
         run=true;
@@ -170,6 +181,8 @@ public class MobileContract extends Contract {
         }
     }
 
+     
+    //because of the extend i must override the abstract methods from the super class
     @Override
     public void printInfoContract()
     {

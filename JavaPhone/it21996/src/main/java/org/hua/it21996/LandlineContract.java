@@ -15,24 +15,21 @@ import java.util.Scanner;
  */
 public class LandlineContract extends Contract{
     
+    //Constant Field Values for better understanding when someone read my code
     public static final int ADSL=0;
     public static final int VDSL=1;
     
+    //Variables that used in this class 
     private int speedBooster;
     
     Scanner choice = new Scanner(System.in);
     
+    //Constructors
     public LandlineContract() {
         
         Contract.counterCode++;
         setContractCode(counterCode);
         
-    }
-    
-    public String getSpeed() {
-        if(this.speedBooster==ADSL) return "ADSL";
-        if(this.speedBooster==VDSL) return "VDSL";
-        return "Not registered";
     }
     
     public LandlineContract(int userDurationContract,BigInteger userPhoneNumber,LocalDateTime date){
@@ -47,17 +44,14 @@ public class LandlineContract extends Contract{
         
     }
     
-    
-
-    /*public LandlineContract(int speedBooster) {
-        Contract.counterCode++;
-        this.setContractCode(counterCode);
-        this.speedBooster = speedBooster;
-        this.
-    }*/
-    
-   
-    
+    //getter
+    public String getSpeed() {
+        if(this.speedBooster==ADSL) return "ADSL";
+        if(this.speedBooster==VDSL) return "VDSL";
+        return "Not registered";
+    }
+ 
+ 
     //Two methods for if customer wants internet and with what speed
     public void chooseNameSpeed()
     {
@@ -82,7 +76,7 @@ public class LandlineContract extends Contract{
         }
     }
     
-    
+    //because of the extend i must override the abstract methods from the super class
     @Override
     public void printInfoContract()
     {
